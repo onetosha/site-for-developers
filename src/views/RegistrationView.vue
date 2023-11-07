@@ -24,37 +24,37 @@ function onSubmit(values, { setErrors }) {
 
 <template>
     <div>
-        <h2>Registration</h2>
+        <h2>Регистрация</h2>
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
         <div class="form-group">
-            <label>Username</label>
+            <label>Имя пользователя</label>
             <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
             <div class="invalid-feedback">{{ errors.username }}</div>
         </div>
         <div class="form-group">
-            <label>First Name</label>
+            <label>Ваше имя</label>
             <Field name="firstName" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
             <div class="invalid-feedback">{{ errors.firstName }}</div>
         </div>
         <div class="form-group">
-            <label>Last Name</label>
+            <label>Ваша фамилия</label>
             <Field name="lastName" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
             <div class="invalid-feedback">{{ errors.lastName }}</div>
         </div>
         <div class="form-group">
-            <label>Password</label>
+            <label>Пароль</label>
             <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
             <div class="invalid-feedback">{{ errors.password }}</div>
         </div>
         <div class="form-group">
-            <label>Confirm Password</label>
+            <label>Повторите пароль</label>
             <Field name="confirmPassword" type="password" class="form-control" :class="{ 'is-invalid': errors.confirmPassword }" />
             <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
         </div>
         <div class="form-group">
             <button class="btn btn-primary" :disabled="isSubmitting">
             <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-            Register
+            Зарегистрироваться
             </button>
         </div>
         <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{ errors.apiError }}</div>

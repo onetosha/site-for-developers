@@ -20,25 +20,29 @@ function onSubmit(values, { setErrors }) {
 
 <template>
     <div>
-        <h2>Login</h2>
+        <h2>Войти</h2>
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
             <div class="form-group">
-                <label>Username</label>
+                <label>Имя пользователя</label>
                 <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
                 <div class="invalid-feedback">{{errors.username}}</div>
             </div>            
             <div class="form-group">
-                <label>Password</label>
+                <label>Пароль</label>
                 <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
                 <div class="invalid-feedback">{{errors.password}}</div>
             </div>            
             <div class="form-group">
                 <button class="btn btn-primary" :disabled="isSubmitting">
                     <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                    Login
+                    Вход
                 </button>
             </div>
             <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{errors.apiError}}</div>
         </Form>
+
+        <div class="form-group">
+            <router-link to="/registration" class="btn btn-link">Еще не зарегистрированы?</router-link>
+        </div>
     </div>
 </template>
