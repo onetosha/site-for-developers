@@ -4,8 +4,9 @@ import Home from '@/views/Home.vue';
 import Login from '@/views/Users/Login.vue';
 import Registration from '@/views/Users/Registration.vue';
 import NotFound from '@/views/NotFound.vue';
-import UsersList from '@/views/Roles/UsersList.vue';
-import RolesManagement from '@/views/Roles/RolesManagement.vue';
+import UsersList from '@/views/Admin/UsersList.vue';
+import RolesManagement from '@/views/Admin/RolesManagement.vue';
+import Logs from '@/views/Admin/Logs.vue';
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/manage',
     name: 'RolesManagement',
     component: RolesManagement,
+  },
+  {
+    path: '/logs',
+    name: 'Logs',
+    component: Logs,
   },
   {
     path: '/:catchAll(.*)',
