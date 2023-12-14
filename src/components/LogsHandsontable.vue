@@ -1,4 +1,14 @@
 <template>
+    
+    <div>
+      <v-text-field id="search_field" type="search"
+      label="Поиск"
+      :rules="rules"
+      color="blue"
+      hide-details="auto">
+      </v-text-field>
+    </div>
+    <p></p>
     <div>
       <div id="hot"></div>
     </div>
@@ -29,6 +39,7 @@
       },
       renderTable(logs) {
       const container = document.getElementById('hot');
+      const searchField = document.querySelector('#search_field');
       const data = logs;
 
       const hot = new Handsontable(container, {
@@ -48,6 +59,18 @@
         ],
         rowHeaders: true,
         colHeaders: true,
+        multiColumnSorting: true,
+        search: true,
+        height: 'auto',
+        licenseKey: 'non-commercial-and-evaluation'
+      });
+      searchField.addEventListener('keyup', function(event) {
+        const search = hot.getPlugin('search');
+        const queryResult = search.query(event.target.value);
+
+        console.log(queryResult);
+
+        hot.render();
       });
     }
   }

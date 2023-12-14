@@ -4,6 +4,8 @@ import axios from 'axios';
 import App from './App.vue';
 import router from './router';
 
+import './assets/base.css';
+
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'

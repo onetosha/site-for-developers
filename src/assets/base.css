@@ -2,6 +2,11 @@ a {
   cursor: pointer;
 }
 
+body {
+  margin: 20px;
+}
+
 .app-container {
   min-height: 350px;
 }
+
