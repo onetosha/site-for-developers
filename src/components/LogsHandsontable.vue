@@ -1,49 +1,77 @@
 <template>
-    
+  <div>
     <div>
-      <v-text-field id="search_field" type="search"
-      label="Поиск"
-      :rules="rules"
-      color="blue"
-      hide-details="auto">
+      <v-text-field id="search_field" type="search" label="Поиск" color="blue" hide-details="auto">
       </v-text-field>
     </div>
     <p></p>
     <div>
       <div id="hot"></div>
     </div>
-  </template>
+    <div>
+      <v-pagination 
+      v-model="currentPage" 
+      :length="totalPages" 
+      ></v-pagination>
+    </div>
+  </div>
+</template>
+
+<script>
+import Handsontable from 'handsontable';
+import "handsontable/dist/handsontable.full.css";
+import axios from 'axios';
+
+export default {
   
-  <script>
-  import Handsontable from 'handsontable';
-  import "handsontable/dist/handsontable.full.css";
-  import axios from 'axios';
-  export default {
-    mounted() {
-      this.getLogs();
+  data() {
+    return {
+      currentPage: 1,
+      itemsPerPage: 25,
+      logs: [],
+      hotInstance: null, // Добавлено новое свойство для ссылки на экземпляр Handsontable
+    };
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.logs.length / this.itemsPerPage);
     },
-    methods: {
-      getLogs() {
-        axios.get('/logs', {
-              headers: {
-                'Authorization': `Bearer ${localStorage.access_token}`
-              }
-            })
-        .then(response => {
-          const logs = response.data;
-          this.renderTable(logs);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      },
-      renderTable(logs) {
+    paginatedLogs() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.logs.slice(startIndex, endIndex);
+    },
+  },
+  mounted() {
+    this.renderTable(); // Изменено - сначала отрисовываем пустую таблицу
+    this.getLogs(); // Затем загружаем данные
+  },
+  watch: {
+    currentPage(newPage) {
+      this.changePage(newPage);
+    }
+  },
+  methods: {
+    getLogs() {
+      axios.get('/logs', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.access_token}`
+        }
+      })
+      .then(response => {
+        this.logs = response.data;
+        this.updateTableData(); // Вызываем метод для обновления данных в таблице
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
+    renderTable() {
       const container = document.getElementById('hot');
       const searchField = document.querySelector('#search_field');
-      const data = logs;
 
       const hot = new Handsontable(container, {
-        data: data,
+        data: [],
         columns: [
           { data: 'id', title: 'ID' },
           { data: 'date', title: 'Date' },
@@ -64,7 +92,10 @@
         height: 'auto',
         licenseKey: 'non-commercial-and-evaluation'
       });
-      searchField.addEventListener('keyup', function(event) {
+
+      this.hotInstance = hot;
+
+      searchField.addEventListener('keyup', event => {
         const search = hot.getPlugin('search');
         const queryResult = search.query(event.target.value);
 
@@ -72,15 +103,27 @@
 
         hot.render();
       });
-    }
-  }
+    },
+    updateTableData() {
+      console.log("Вызыван updateTableData");
+      if (this.hotInstance) {
+        this.hotInstance.loadData(this.paginatedLogs); // Обновляем данные в таблице.
+      }
+    },
+    changePage(page) {
+      console.log("Вызыван changePage");
+      this.currentPage = page;
+      this.updateTableData(); // Вызываем метод для обновления данных в таблице
+    },
+  },
 };
+
 </script>
 
 <style scoped>
 /* Стили для Handsontable */
 #hot {
   width: 100%;
-  height: 400px;
+  height: calc(100% - 100px); /* Высота таблицы минус высота пагинации */
 }
 </style>
