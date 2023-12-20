@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from '@/views/Home.vue';
 import Login from '@/views/Users/Login.vue';
-import Registration from '@/views/Users/Registration.vue';
+import UsersManagement from '@/views/Users/UsersManagement.vue';
 import NotFound from '@/views/NotFound.vue';
 import UsersList from '@/views/Admin/UsersList.vue';
 import RolesManagement from '@/views/Admin/RolesManagement.vue';
@@ -20,9 +20,9 @@ const routes = [
     component: Login
   },
   {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration
+    path: '/users',
+    name: 'UsersManagement',
+    component: UsersManagement
   },
   {
     path: '/list',
@@ -30,7 +30,7 @@ const routes = [
     component: UsersList,
   },
   {
-    path: '/manage',
+    path: '/roles',
     name: 'RolesManagement',
     component: RolesManagement,
   },
@@ -50,5 +50,18 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
+
+// router.beforeEach(async (to) => {
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ['/login'];
+//   const authRequired = !publicPages.includes(to.path);
+//   const auth = useAuthStore();
+
+//   if (authRequired && !auth.user) {
+//       auth.returnUrl = to.fullPath;
+//       return '/login';
+//   }
+// });
+
 
 export default router;

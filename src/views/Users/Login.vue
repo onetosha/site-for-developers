@@ -16,6 +16,7 @@ async function onSubmit(values, { setErrors }) {
   try {
     const response = await axios.post('/users/login', { userName, password });
     localStorage.access_token = response.data;
+    localStorage.user_name = userName;
     router.push('/list');
   } catch (error) {
     if (error.response && error.response.data) {
@@ -29,7 +30,7 @@ async function onSubmit(values, { setErrors }) {
 
 <template>
   <div>
-    <h2>Войти</h2>
+    <h2>Вход</h2>
     <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
       <div class="form-group">
         <label>Имя пользователя</label>
@@ -49,9 +50,5 @@ async function onSubmit(values, { setErrors }) {
       </div>
       <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{ errors.apiError }}</div>
     </Form>
-
-    <div class="form-group">
-      <router-link to="/register" class="btn btn-link">Еще не зарегистрированы?</router-link>
-    </div>
   </div>
 </template>

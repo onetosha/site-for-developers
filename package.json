@@ -17,6 +17,7 @@
     "yup": "^1.3.2"
   },
   "devDependencies": {
+    "@mdi/font": "^7.3.67",
     "@vitejs/plugin-vue": "^4.4.0",
     "vite": "^4.4.11"
   }

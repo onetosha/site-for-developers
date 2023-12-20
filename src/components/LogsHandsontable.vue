@@ -1,17 +1,27 @@
 <template>
   <div>
     <div>
+      <label>Найти в таблице:</label>
       <v-text-field id="search_field" type="search" label="Поиск" color="blue" hide-details="auto">
       </v-text-field>
     </div>
-    <p></p>
+    <div>
+      <label>Отображать записей на странице:</label>
+      <v-select
+        v-model="itemsPerPage"
+        :items="[10, 25, 50, 100]"
+        dense
+        outlined
+      ></v-select>
+    </div>
     <div>
       <div id="hot"></div>
     </div>
     <div>
       <v-pagination 
       v-model="currentPage" 
-      :length="totalPages" 
+      :length="totalPages"
+      :total-visible="7" 
       ></v-pagination>
     </div>
   </div>
@@ -29,7 +39,7 @@ export default {
       currentPage: 1,
       itemsPerPage: 25,
       logs: [],
-      hotInstance: null, // Добавлено новое свойство для ссылки на экземпляр Handsontable
+      hotInstance: null,
     };
   },
   computed: {
@@ -49,6 +59,10 @@ export default {
   watch: {
     currentPage(newPage) {
       this.changePage(newPage);
+    },
+    itemsPerPage(newItemsPerPage) {
+      this.currentPage = 1;
+      this.updateTableData();
     }
   },
   methods: {
@@ -96,12 +110,29 @@ export default {
       this.hotInstance = hot;
 
       searchField.addEventListener('keyup', event => {
-        const search = hot.getPlugin('search');
-        const queryResult = search.query(event.target.value);
+        const search = this.hotInstance.getPlugin('search');
+        const searchValue = event.target.value;
+        search.query(searchValue);
 
-        console.log(queryResult);
-
-        hot.render();
+        const filteredData = this.logs.filter(log => {
+        return (
+          log.id.toString().toLowerCase().includes(searchValue) ||
+          log.date.toString().toLowerCase().includes(searchValue) ||
+          log.level.toLowerCase().includes(searchValue) ||
+          log.logger.toLowerCase().includes(searchValue) ||
+          log.responsetime.toString().toLowerCase().includes(searchValue) ||
+          log.message.toLowerCase().includes(searchValue) ||
+          log.username.toLowerCase().includes(searchValue) ||
+          log.exception.toLowerCase().includes(searchValue) ||
+          log.statuscode.toString().toLowerCase().includes(searchValue) ||
+          log.url.toLowerCase().includes(searchValue) ||
+          log.action.toLowerCase().includes(searchValue)
+          );
+        });
+        this.hotInstance.loadData(filteredData);
+        if (!searchValue) {
+          this.updateTableData();
+        }
       });
     },
     updateTableData() {
@@ -114,7 +145,7 @@ export default {
       console.log("Вызыван changePage");
       this.currentPage = page;
       this.updateTableData(); // Вызываем метод для обновления данных в таблице
-    },
+    }
   },
 };
 
