@@ -13,7 +13,7 @@
                 label="Role name"
                 required
               ></v-text-field>
-              <v-btn type="submit" color="primary">Create</v-btn>
+              <v-btn type="submit" color="primary">Создать</v-btn>
             </v-form>
           </v-card-text>
         </v-card>
@@ -33,7 +33,7 @@
                 label="Role name"
                 required
               ></v-text-field>
-              <v-btn type="submit" color="primary">Delete</v-btn>
+              <v-btn type="submit" color="primary">Удалить</v-btn>
             </v-form>
           </v-card-text>
         </v-card>
