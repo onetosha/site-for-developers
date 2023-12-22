@@ -19,9 +19,9 @@
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props">{{ userName }}</v-btn>
             </template>
-              <v-list>
-                <v-list-item to="login" link>Выйти</v-list-item>
-              </v-list>
+            <v-list>
+              <v-list-item @click="logout" link>Выйти</v-list-item>
+            </v-list>
           </v-menu>
           <v-btn v-else to="/login" text>Вход</v-btn>
         </v-toolbar-items>
@@ -60,6 +60,11 @@
       toggleDrawer() {
         this.drawerOpen = !this.drawerOpen; // Инвертируем текущее состояние меню
       },
+      logout() {
+        delete localStorage.access_token;
+        delete localStorage.user_name;
+        this.$router.push('/login');
+      }
     },
   };
 

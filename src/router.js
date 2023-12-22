@@ -8,6 +8,11 @@ import UsersList from '@/views/Admin/UsersList.vue';
 import RolesManagement from '@/views/Admin/RolesManagement.vue';
 import Logs from '@/views/Admin/Logs.vue';
 
+function isAuthenticated() {
+  const accessToken = localStorage.access_token;
+  return !!accessToken; // Возвращает true, если пользователь авторизован, иначе false
+}
+
 const routes = [
   {
     path: '/home',
@@ -17,7 +22,8 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: { public: true } 
   },
   {
     path: '/users',
@@ -45,23 +51,18 @@ const routes = [
     component: NotFound
   }
 ];
-
 const router = createRouter({
   history: createWebHistory(),
   routes
 });
 
-// router.beforeEach(async (to) => {
-//   // redirect to login page if not logged in and trying to access a restricted page
-//   const publicPages = ['/login'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const auth = useAuthStore();
-
-//   if (authRequired && !auth.user) {
-//       auth.returnUrl = to.fullPath;
-//       return '/login';
-//   }
-// });
-
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.public || isAuthenticated()) {
+    // Если страница является публичной или пользователь аутентифицирован, продолжить нормальную навигацию
+    next();
+  } else {
+    // Если страница требует аутентификации и пользователь не аутентифицирован, перенаправить на страницу входа
+    next('/login');
+  }
+});
 export default router;

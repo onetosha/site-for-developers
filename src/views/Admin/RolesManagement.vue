@@ -30,9 +30,18 @@
             <v-form @submit.prevent="deleteRole">
               <v-text-field
                 v-model="deleteRoleName"
-                label="Role name"
+                label="Введите роль"
                 required
               ></v-text-field>
+              <h3>или</h3>
+              <v-select
+                v-model="deleteRoleName"
+                :items="roles"
+                item-text="name"
+                item-value="id"
+                label="Выберите роль"
+                required
+              ></v-select>
               <v-btn type="submit" color="primary">Удалить</v-btn>
             </v-form>
           </v-card-text>
@@ -57,7 +66,11 @@ export default {
       createRoleName: '',
       deleteRoleName: '',
       resultMessage: '',
+      roles: [],
     };
+  },
+  mounted() {
+    this.fetchRoles();
   },
   methods: {
     async createRole() {
@@ -95,6 +108,19 @@ export default {
       } catch (error) {
         this.resultMessage = error.response.data;
         console.error(error.response.data);
+        // Обработка ошибок
+      }
+    },
+    async fetchRoles() {
+      try {
+        const response = await axios.get('/roles/roles', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.access_token}`,
+          },
+        });
+        this.roles = response.data.map(role => role.name);
+      } catch (error) {
+        console.error(error);
         // Обработка ошибок
       }
     },

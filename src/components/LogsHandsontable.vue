@@ -24,6 +24,22 @@
       :total-visible="7" 
       ></v-pagination>
     </div>
+    <div>
+      <v-row>
+        <v-col cols="2">
+          <v-text-field
+            v-model="manualPageNumber"
+            label="Перейти к странице"
+            type="number"
+            min="1"
+            :max="totalPages"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2">
+          <v-btn @click="goToPageFromInput" color="primary">Перейти</v-btn>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -40,6 +56,7 @@ export default {
       itemsPerPage: 25,
       logs: [],
       hotInstance: null,
+      manualPageNumber: 1,
     };
   },
   computed: {
@@ -57,10 +74,10 @@ export default {
     this.getLogs(); // Затем загружаем данные
   },
   watch: {
-    currentPage(newPage) {
-      this.changePage(newPage);
+    currentPage() {
+      this.updateTableData();
     },
-    itemsPerPage(newItemsPerPage) {
+    itemsPerPage() {
       this.currentPage = 1;
       this.updateTableData();
     }
@@ -141,11 +158,11 @@ export default {
         this.hotInstance.loadData(this.paginatedLogs); // Обновляем данные в таблице.
       }
     },
-    changePage(page) {
-      console.log("Вызыван changePage");
-      this.currentPage = page;
-      this.updateTableData(); // Вызываем метод для обновления данных в таблице
-    }
+    goToPageFromInput() {
+      if (this.manualPageNumber >= 1 && this.manualPageNumber <= this.totalPages) {
+        this.currentPage = this.manualPageNumber;
+      }
+  },
   },
 };
 

@@ -5,7 +5,7 @@
         <v-card>
           <p>{{ resultMessage }}</p>
           <v-card-title>
-            <h2>Регистрация</h2>
+            <h2>Добавить пользователя</h2>
           </v-card-title>
           <v-card-text>
             <Form
