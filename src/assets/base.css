@@ -10,3 +10,8 @@ body {
   min-height: 350px;
 }
 
+.v-main {
+  padding-top: 64px;
+  background-color: white;
+}
+

@@ -29,14 +29,13 @@
     <v-navigation-drawer v-model="drawerOpen" app>
       <v-list>
         <v-list-item to="/home" link >
-          <v-list-item-icon>
+          <template v-slot:prepend>
             <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
             <v-list-item-title>Главная</v-list-item-title>
-          </v-list-item-content>
+          </template>
         </v-list-item>
        </v-list>
+       <TreeView></TreeView>
     </v-navigation-drawer>
     <v-main class="container mt-4"> 
       <router-view></router-view>
@@ -45,6 +44,7 @@
   </template>
   
   <script>
+  import TreeView from './TreeViewVuetify.vue';
 
   export default {
     data() {
@@ -52,6 +52,9 @@
         drawerOpen: false, // Изначально меню закрыто
         userName: null
       };
+    },
+    components: {
+      TreeView,
     },
     mounted() {
       this.userName = localStorage.user_name;
