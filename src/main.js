@@ -4,6 +4,8 @@ import axios from 'axios';
 import App from './App.vue';
 import router from './router';
 
+import store from './stores/store';
+
 import './assets/base.css';
 
 import 'vuetify/styles'
@@ -26,7 +28,7 @@ const app = createApp(App);
 
 axios.defaults.baseURL = 'https://localhost:44360';
 
-
+app.use(store);
 app.use(router);
 app.use(vuetify);
 

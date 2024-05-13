@@ -50,14 +50,15 @@
     data() {
       return {
         drawerOpen: false, // Изначально меню закрыто
-        userName: null
       };
     },
     components: {
       TreeView,
     },
-    mounted() {
-      this.userName = localStorage.user_name;
+    computed: {
+      userName() {
+        return this.$store.state.userName;
+      }
     },
     methods: {
       toggleDrawer() {
@@ -65,7 +66,7 @@
       },
       logout() {
         delete localStorage.access_token;
-        delete localStorage.user_name;
+        this.$store.dispatch('updateUserName', null);
         this.$router.push('/login');
       }
     },
