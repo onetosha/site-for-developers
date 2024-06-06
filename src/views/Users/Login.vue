@@ -51,7 +51,7 @@ export default {
       const { userName, password } = this.values;
       try {
         const response = await axios.post('/users/login', { userName, password });
-        localStorage.access_token = response.data;
+        console.log(response);
         this.$store.dispatch('updateUserName', userName);
         this.$router.push('/list');
       } catch (error) {

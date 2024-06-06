@@ -10,7 +10,7 @@
             <v-form @submit.prevent="createRole">
               <v-text-field
                 v-model="createRoleName"
-                label="Role name"
+                label="Введите название"
                 required
               ></v-text-field>
               <v-btn type="submit" color="primary">Создать</v-btn>
@@ -30,7 +30,7 @@
             <v-form @submit.prevent="deleteRole">
               <v-text-field
                 v-model="deleteRoleName"
-                label="Введите роль"
+                label="Введите название"
                 required
               ></v-text-field>
               <h3>или</h3>
@@ -77,15 +77,10 @@ export default {
       try {
         const response = await axios.post(
           '/roles/create',
-          { roleName: this.createRoleName },
-          {
-            headers: {
-              'Authorization': `Bearer ${localStorage.access_token}`,
-            },
-          }
+          { roleName: this.createRoleName }
         );
-        this.resultMessage = response.data;
-        console.log(response.data);
+        this.resultMessage = response.data.data;
+        console.log(response.data.data);
       } catch (error) {
         this.resultMessage = error.response.data;
         console.error(error.response.data);
@@ -96,15 +91,10 @@ export default {
       try {
         const response = await axios.post(
           '/roles/delete',
-          { roleName: this.deleteRoleName },
-          {
-            headers: {
-              'Authorization': `Bearer ${localStorage.access_token}`,
-            },
-          }
+          { roleName: this.deleteRoleName }
         );
-        this.resultMessage = response.data;
-        console.log(response.data);
+        this.resultMessage = response.data.data;
+        console.log(response.data.data);
       } catch (error) {
         this.resultMessage = error.response.data;
         console.error(error.response.data);
@@ -113,12 +103,8 @@ export default {
     },
     async fetchRoles() {
       try {
-        const response = await axios.get('/roles/roles', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.access_token}`,
-          },
-        });
-        this.roles = response.data.map(role => role.name);
+        const response = await axios.get('/roles/list');
+        this.roles = response.data.data.map(role => role.name);
       } catch (error) {
         console.error(error);
         // Обработка ошибок

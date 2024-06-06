@@ -26,6 +26,7 @@ const vuetify = createVuetify({
 
 const app = createApp(App);
 
+axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://localhost:44360';
 
 app.use(store);

@@ -7,7 +7,7 @@ const store = createStore({
   mutations: {
     setUserName(state, userName) {
       state.userName = userName;
-    }
+    } 
   },
   actions: {
     updateUserName({ commit }, userName) {

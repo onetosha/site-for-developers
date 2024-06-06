@@ -139,11 +139,7 @@ export default {
       this.error = '';
 
       try {
-        const response = await axios.post('/roles/userroles', { userName: this.userNameEdit }, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.access_token}`,
-          },
-        });
+        const response = await axios.post('/roles/userroles', { userName: this.userNameEdit });
         this.userId = response.data.userId;
         this.userRoles = response.data.userRoles;
         this.allRoles = response.data.allRoles;
@@ -161,10 +157,6 @@ export default {
         await axios.post('/roles/edit', {
             userName: this.userNameEdit,
             roles: this.selectedRoles,
-        }, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.access_token}`,
-          },
         });
         this.resultMessage = 'Roles updated successfully.';
       } catch (error) {

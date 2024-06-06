@@ -6,7 +6,7 @@ import axios from 'axios';
     <div>
       <h2>Список пользователей</h2>
       <ul>
-        <li v-for="user in users" :key="user.email">{{ user.userName }}</li>
+        <li v-for="user in users" :key="user.id">{{ user.username }}</li>
       </ul>
     </div>
   </template>
@@ -24,12 +24,9 @@ import axios from 'axios';
     methods: {
       async fetchUsers() {
         try {
-          const response = await axios.get('/roles/list', {
-              headers: {
-                'Authorization': `Bearer ${localStorage.access_token}`
-              }
-            });
-          this.users = response.data;
+          const response = await axios.get('/users/list');
+          this.users = response.data.data;
+          console.log(this.users);
         }
         catch (error) {
           console.error(error);

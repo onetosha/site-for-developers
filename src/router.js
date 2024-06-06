@@ -8,10 +8,10 @@ import UsersList from '@/views/Admin/UsersList.vue';
 import RolesManagement from '@/views/Admin/RolesManagement.vue';
 import Logs from '@/views/Admin/Logs.vue';
 
-function isAuthenticated() {
-  const accessToken = localStorage.access_token;
-  return !!accessToken; // Возвращает true, если пользователь авторизован, иначе false
-}
+// function isAuthenticated() {
+//   const accessToken = localStorage.access_token;
+//   return !!accessToken; // Возвращает true, если пользователь авторизован, иначе false
+// }
 
 const routes = [
   {
@@ -56,13 +56,13 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.public || isAuthenticated()) {
-    // Если страница является публичной или пользователь аутентифицирован, продолжить нормальную навигацию
-    next();
-  } else {
-    // Если страница требует аутентификации и пользователь не аутентифицирован, перенаправить на страницу входа
-    next('/login');
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.public || isAuthenticated()) {
+//     // Если страница является публичной или пользователь аутентифицирован, продолжить нормальную навигацию
+//     next();
+//   } else {
+//     // Если страница требует аутентификации и пользователь не аутентифицирован, перенаправить на страницу входа
+//     next('/login');
+//   }
+// });
 export default router;
