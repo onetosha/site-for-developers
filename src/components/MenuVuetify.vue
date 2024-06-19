@@ -7,7 +7,7 @@
         <v-toolbar-items>
             <v-menu>
             <template v-slot:activator="{ props }">
-              <v-btn v-bind="props">Админ</v-btn>
+              <v-btn v-if="this.hasRole('Admin')" v-bind="props">Админ</v-btn>
             </template>
               <v-list>
                 <v-list-item to="/roles" link>Роли</v-list-item>
@@ -35,7 +35,6 @@
           </template>
         </v-list-item>
        </v-list>
-       <TreeView></TreeView>
     </v-navigation-drawer>
     <v-main class="container mt-4"> 
       <router-view></router-view>
@@ -44,7 +43,7 @@
   </template>
   
   <script>
-  import TreeView from './TreeViewVuetify.vue';
+  import { mapGetters } from 'vuex';
 
   export default {
     data() {
@@ -52,21 +51,20 @@
         drawerOpen: false, // Изначально меню закрыто
       };
     },
-    components: {
-      TreeView,
-    },
     computed: {
       userName() {
         return this.$store.state.userName;
-      }
+      },
+      ...mapGetters([
+        'hasRole'
+      ])
     },
     methods: {
       toggleDrawer() {
         this.drawerOpen = !this.drawerOpen; // Инвертируем текущее состояние меню
       },
       logout() {
-        delete localStorage.access_token;
-        this.$store.dispatch('updateUserName', null);
+        this.$store.dispatch('updateUserData', null);
         this.$router.push('/login');
       }
     },

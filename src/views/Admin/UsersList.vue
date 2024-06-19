@@ -26,7 +26,6 @@ import axios from 'axios';
         try {
           const response = await axios.get('/users/list');
           this.users = response.data.data;
-          console.log(this.users);
         }
         catch (error) {
           console.error(error);

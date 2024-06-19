@@ -47,19 +47,14 @@ export default {
     };
   },
   methods: {
-    async onSubmit( { setErrors } ) {
+    async onSubmit() {
       const { userName, password } = this.values;
       try {
         const response = await axios.post('/users/login', { userName, password });
-        console.log(response);
-        this.$store.dispatch('updateUserName', userName);
+        this.$store.dispatch('updateUserData', userName);
         this.$router.push('/list');
       } catch (error) {
-        if (error.response && error.response.data) {
-          setErrors({ apiError: error.response.data.message });
-        } else {
           console.error(error);
-        }
       }
     }
   }
