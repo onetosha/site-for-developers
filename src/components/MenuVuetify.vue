@@ -10,9 +10,9 @@
               <v-btn v-if="this.hasRole('Admin')" v-bind="props">Админ</v-btn>
             </template>
               <v-list>
-                <v-list-item to="/roles" link>Роли</v-list-item>
-                <v-list-item to="/logs" link>Логи</v-list-item>
-                <v-list-item to="/users" link>Пользователи</v-list-item>
+                <v-list-item to="/admin/roles" link>Роли</v-list-item>
+                <v-list-item to="/admin/logs" link>Логи</v-list-item>
+                <v-list-item to="/admin/users" link>Пользователи</v-list-item>
               </v-list>
           </v-menu>
           <v-menu v-if="userName">

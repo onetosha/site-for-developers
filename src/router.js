@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from '@/views/Home.vue';
 import Login from '@/views/Users/Login.vue';
-import UsersManagement from '@/views/Users/UsersManagement.vue';
+import UsersManagement from '@/views/Admin/UsersManagement.vue';
 import NotFound from '@/views/NotFound.vue';
 import UsersList from '@/views/Admin/UsersList.vue';
 import RolesManagement from '@/views/Admin/RolesManagement.vue';
@@ -21,7 +21,7 @@ const routes = [
     component: Login,
   },
   {
-    path: '/users',
+    path: '/admin/users',
     name: 'UsersManagement',
     component: UsersManagement,
     meta: { requiresAuth: true, role: "Admin" }
@@ -33,13 +33,13 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/roles',
+    path: '/admin/roles',
     name: 'RolesManagement',
     component: RolesManagement,
     meta: { requiresAuth: true, role: "Admin" }
   },
   {
-    path: '/logs',
+    path: '/admin/logs',
     name: 'Logs',
     component: Logs,
     meta: { requiresAuth: true, role: "Admin" }
